@@ -1,0 +1,7 @@
+---
+# tasks file for docker
+
+# Load Distibution Tasks
+- name: Load Distribution Specific Tasks
+  include: "{{ ansible_distribution }}.yml"
+  when: ansible_distribution == 'Ubuntu'
