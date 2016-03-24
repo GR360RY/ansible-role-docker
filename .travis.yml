@@ -25,12 +25,12 @@ install:
 
 script:
   # Basic role syntax check
-  - "ansible-playbook -c local tests/test.yml -i tests/inventory  --syntax-check --sudo"
+  - "ansible-playbook -c local tests/travisci_playbook.yml -i tests/inventory  --syntax-check --sudo"
   # Initial Play
-  - "ansible-playbook -c local tests/test.yml -i tests/inventory --sudo"
+  - "ansible-playbook -c local tests/travisci_playbook.yml -i tests/inventory --sudo"
   # Idempotence test
   - >
-    ansible-playbook -c local tests/test.yml
+    ansible-playbook -c local tests/travisci_playbook.yml
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)

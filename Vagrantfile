@@ -8,8 +8,16 @@ Vagrant.configure(2) do |config|
     vb.linked_clone = true if Vagrant::VERSION =~ /^1.8/
   end
 
-  config.vm.provision :ansible do |ansible|
-    ansible.playbook = "docker.yml"
+  if File.exist?("../ansible-role-docker") then
+    config.vm.provision :ansible do |ansible|
+    	ansible.playbook = "tests/github_role_playbook.yml"
+  	end
+  end
+
+  if File.exist?("../GR360RY.docker") then
+    config.vm.provision :ansible do |ansible|
+    	ansible.playbook = "tests/galaxy_role_playbook.yml"
+  	end
   end
 
 end
