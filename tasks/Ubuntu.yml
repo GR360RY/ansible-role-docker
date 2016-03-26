@@ -31,4 +31,21 @@
   apt: name=docker-engine state=latest update_cache=yes cache_valid_time=3600
 
 - name: Make sure docker service is enabled and start on boot
-  service: name=docker state=started enabled=yes 
+  service: name=docker state=started enabled=yes
+
+- name: Install Python pip
+  apt: name=python-pip state=latest
+
+- name: Install Docker python dependencies
+  pip: name={{ item }} state=latest
+  with_items: 
+    - virtualenv
+    - docker-py
+
+- name: Add users to the docker group
+  user:
+    name:   "{{ item }}"
+    groups: docker
+    append: yes
+  with_items: "{{docker_group_members}}"
+  when: docker_group_members is defined
